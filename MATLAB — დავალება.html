@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MATLAB — დავალება </title>
+  <style>
+    :root{
+      --bg:#f7f9fc;
+      --card:#ffffff;
+      --text:#1f2937;
+      --muted:#6b7280;
+      --accent:#1d4ed8;
+      --accent2:#0f766e;
+      --border:#dbe3ef;
+      --soft:#eef4ff;
+      --code-bg:#0f172a;
+      --code-text:#e5eefc;
+      --warn-bg:#fff7ed;
+      --warn-border:#ea580c;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      line-height:1.65;
+      color:var(--text);
+      background:var(--bg);
+    }
+    .container{
+      max-width:1100px;
+      margin:0 auto;
+      padding:32px 20px 64px;
+    }
+    header{
+      background:linear-gradient(135deg,#eaf2ff,#f7fffe);
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:28px 24px;
+      margin-bottom:24px;
+    }
+    h1{
+      margin:0 0 10px;
+      font-size:2.2rem;
+      color:#0f172a;
+    }
+    .subtitle{
+      margin:0;
+      color:var(--muted);
+      font-size:1.05rem;
+    }
+    .note{
+      margin-top:18px;
+      padding:12px 14px;
+      background:#fff;
+      border-left:5px solid var(--accent);
+      border-radius:10px;
+      color:#374151;
+    }
+    nav{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:18px 20px;
+      margin-bottom:24px;
+    }
+    nav h2{
+      margin:0 0 12px;
+      font-size:1.2rem;
+    }
+    nav ul{
+      margin:0;
+      padding-left:20px;
+      columns:2;
+    }
+    nav li{
+      margin:6px 0;
+    }
+    nav a{
+      color:var(--accent);
+      text-decoration:none;
+    }
+    nav a:hover{
+      text-decoration:underline;
+    }
+    section{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:24px;
+      margin-bottom:22px;
+      box-shadow:0 3px 10px rgba(15,23,42,0.03);
+    }
+    h2{
+      margin-top:0;
+      color:#111827;
+      font-size:1.55rem;
+    }
+    h3{
+      color:#1f2937;
+      margin-top:22px;
+      margin-bottom:8px;
+      font-size:1.14rem;
+    }
+    p{ margin:10px 0; }
+    ul, ol{
+      margin:10px 0 10px 22px;
+    }
+    li{ margin:6px 0; }
+    .inline-code{
+      font-family: Consolas, Monaco, "Courier New", monospace;
+      background:#eef2ff;
+      color:#312e81;
+      padding:2px 7px;
+      border-radius:7px;
+      font-size:0.95em;
+    }
+    .formula{
+      background:#f8fafc;
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding:14px 16px;
+      font-family: "Times New Roman", serif;
+      font-size:1.1rem;
+      margin:12px 0;
+      overflow-x:auto;
+    }
+    .task{
+      background:var(--soft);
+      border:1px solid #c9d9ff;
+      border-radius:14px;
+      padding:16px;
+      margin:14px 0;
+    }
+    .task-title{
+      font-weight:700;
+      color:#1e3a8a;
+      margin-bottom:8px;
+      font-size:1.05rem;
+    }
+    .tip{
+      background:#ecfeff;
+      border-left:5px solid var(--accent2);
+      padding:12px 14px;
+      border-radius:10px;
+      margin:14px 0;
+    }
+    .warning{
+      background:var(--warn-bg);
+      border-left:5px solid var(--warn-border);
+      padding:12px 14px;
+      border-radius:10px;
+      margin:14px 0;
+    }
+    table{
+      width:100%;
+      border-collapse:collapse;
+      margin-top:12px;
+    }
+    th, td{
+      border:1px solid var(--border);
+      padding:10px 12px;
+      text-align:left;
+      vertical-align:top;
+    }
+    th{
+      background:#f1f5f9;
+    }
+    footer{
+      text-align:center;
+      color:var(--muted);
+      font-size:0.95rem;
+      margin-top:20px;
+      padding:12px;
+    }
+    @media (max-width: 800px){
+      nav ul{columns:1}
+      h1{font-size:1.7rem}
+      section{padding:18px}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <nav>
+      <h2>სარჩევი</h2>
+      <ul>
+        <li><a href="#hw1">ამოცანა 1</a></li>
+        <li><a href="#hw2">ამოცანა 2</a></li>
+        <li><a href="#hw3">ამოცანა 3</a></li>
+        <li><a href="#hw4">ამოცანა 4</a></li>
+        <li><a href="#hw5">ამოცანა 5</a></li>
+        <li><a href="#hw6">ამოცანა 6</a></li>
+        <li><a href="#hw7">ამოცანა 7</a></li>
+        <li><a href="#hw8">ამოცანა 8</a></li>
+        <li><a href="#hw9">ამოცანა 9</a></li>
+        <li><a href="#hw10">ამოცანა 10</a></li>
+        <li><a href="#hw11">ამოცანა 11</a></li>
+        <li><a href="#hw12">ამოცანა 12</a></li>
+        <li><a href="#hw13">ამოცანა 13</a></li>
+        <li><a href="#hw14">ამოცანა 14</a></li>
+        <li><a href="#hw15">ამოცანა 15</a></li>
+        <li><a href="#hw16">ამოცანა 16</a></li>
+        <li><a href="#hw17">ამოცანა 17</a></li>
+        <li><a href="#hw18">ამოცანა 18</a></li>
+        <li><a href="#extra">დამატებითი ამოცანები</a></li>
+        <li><a href="#grading">შეფასება</a></li>
+      </ul>
+    </nav>
+
+    
+
+    <section id="hw1">
+      <h2>ამოცანა 1 — რიცხვითი ცვლადები და გამოთვლები</h2>
+      <p>დაადეკლარით შემდეგი ცვლადები:</p>
+      <ul>
+        <li>პროდუქტის მასა: <span class="inline-code">m = 12.5</span> კგ</li>
+        <li>სითბოტევადობა: <span class="inline-code">cp = 3.8</span> კჯ/(კგ·°C)</li>
+        <li>ტემპერატურის ცვლილება: <span class="inline-code">dT = 45</span> °C</li>
+      </ul>
+
+      <div class="formula">Q = m c<sub>p</sub> ΔT</div>
+
+      <div class="task">
+        <div class="task-title">შესასრულებელი</div>
+        <ol>
+          <li>გამოთვალეთ <strong>Q</strong></li>
+          <li>გამოიტანეთ შედეგი <span class="inline-code">disp</span> ბრძანებით</li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="hw2">
+      <h2>ამოცანა 2 — სიმბოლური გამოსახულების შექმნა</h2>
+      <p>სიმბოლურად განსაზღვრეთ ფუნქცია:</p>
+      <div class="formula">f(x) = 3x<sup>2</sup> - 5x + 7</div>
+
+      <div class="task">
+        <div class="task-title">შესასრულებელი</div>
+        <ol>
+          <li>შექმენით სიმბოლური გამოსახულება</li>
+          <li>გაამარტივეთ ან გადაამოწმეთ, თუ საჭიროა</li>
+          <li>იპოვეთ ფუნქციის მნიშვნელობა:
+            <ul>
+              <li>x = 0-ზე</li>
+              <li>x = 2-ზე</li>
+              <li>x = -1-ზე</li>
+            </ul>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="hw3">
+      <h2>ამოცანა 3 — სიმბოლური განტოლების ამოხსნა</h2>
+      <p>ამოხსენით განტოლება:</p>
+      <div class="formula">x<sup>2</sup> - 7x + 10 = 0</div>
+
+      <div class="task">
+        <div class="task-title">შესასრულებელი</div>
+        <ol>
+          <li>გამოიყენეთ <span class="inline-code">solve</span></li>
+          <li>გადაამოწმეთ შედეგი მიღებული ფესვების განტოლებაში ჩასმით</li>
+          <li>მიუთითეთ, ფესვები ნამდვილია თუ კომპლექსური</li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="hw4">
+      <h2>ამოცანა 4 — განტოლებათა სისტემა</h2>
+      <p>ამოხსენით სისტემა:</p>
+      <div class="formula">
+        x + y = 12<br />
+        2x - y = 3
+      </div>
+
+      <div class="task">
+        <div class="task-title">შესასრულებელი</div>
+        <ol>
+          <li>გამოიყენეთ სიმბოლური ცვლადები</li>
+          <li>ამოხსენით სისტემა</li>
+          <li>MATLAB-ში გადაამოწმეთ ამონახსნი</li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="hw5">
+      <h2>ამოცანა 5 — წარმოებულები</h2>
+      <p>მოცემულია ფუნქცია:</p>
+      <div class="formula">f(x) = x<sup>3</sup> - 6x<sup>2</sup> + 9x + 1</div>
+
+      <div class="task">
+        <div class="task-title">შესასრულებელი</div>
+        <ol>
+          <li>იპოვეთ პირველი წარმოებული</li>
+          <li>იპოვეთ მეორე წარმოებული</li>
+          <li>იპოვეთ პირველი წარმოებულის მნიშვნელობა x = 2-ზე</li>
+          <li>მოკლედ განმარტეთ, რას აღწერს წარმოებული</li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="hw6">
+      <h2>ამოცანა 6 — ნაწილობრივი წარმოებულები</h2>
+      <p>მოცემულია ფუნქცია:</p>
+      <div class="formula">f(x,y) = x<sup>2</sup>y + 4xy<sup>2</sup></div>
+
+      <div class="task">
+        <div class="task-title">შესასრულებელი</div>
+        <ol>
+          <li>იპოვეთ ∂f/∂x</li>
+          <li>იპოვეთ ∂f/∂y</li>
+          <li>გამოთვალეთ ორივე (1,2) წერტილში</li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="hw7">
+      <h2>ამოცანა 7 — განუსაზღვრელი და განსაზღვრული ინტეგრალი</h2>
+      <p>მოცემულია:</p>
+      <div class="formula">f(x) = 2x<sup>2</sup> + 3x + 1</div>
+
+      <div class="task">
+        <div class="task-title">შესასრულებელი</div>
+        <ol>
+          <li>იპოვეთ განუსაზღვრელი ინტეგრალი</li>
+          <li>იპოვეთ განსაზღვრული ინტეგრალი x = 0-დან x = 3-მდე</li>
+          <li>განმარტეთ, რას ნიშნავს ეს ინტეგრალი გეომეტრიულად</li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="hw8">
+      <h2>ამოცანა 8 — რიცხვითი ფუნქციის გრაფიკი</h2>
+      <p>შექმენით ვექტორი 0-დან 10-მდე ნაბიჯით 0.1 და ააგეთ ფუნქციის გრაფიკი:</p>
+      <div class="formula">y = e<sup>-0.4x</sup></div>
+
+      <div class="task">
+        <div class="task-title">მოთხოვნები</div>
+        <ol>
+          <li>გამოიყენეთ <span class="inline-code">plot</span></li>
+          <li>დაამატეთ სათაური, ღერძების სახელები და ბადე</li>
+          <li>მიუთითეთ, ფუნქცია ზრდადია თუ კლებადი</li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="hw9">
+      <h2>ამოცანა 9 — რამდენიმე ფუნქციის ერთ გრაფიკზე აგება</h2>
+      <p>ერთსა და იმავე ფიგურაზე ააგეთ:</p>
+      <div class="formula">
+        y<sub>1</sub> = x<br />
+        y<sub>2</sub> = x<sup>2</sup>
+      </div>
+      <p>ინტერვალზე 0 ≤ x ≤ 5</p>
+
+      <div class="task">
+        <div class="task-title">მოთხოვნები</div>
+        <ol>
+          <li>გამოიყენეთ ერთი <span class="inline-code">plot</span> ბრძანება ან <span class="inline-code">hold on</span></li>
+          <li>დაამატეთ <span class="inline-code">legend</span></li>
+          <li>დაამატეთ ღერძების სახელები და <span class="inline-code">grid</span></li>
+          <li>მოკლედ შეადარეთ გრაფიკების ფორმა</li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="hw10">
+      <h2>ამოცანა 10 — სიმბოლური ფუნქციის გრაფიკი</h2>
+      <p>გამოიყენეთ <span class="inline-code">fplot</span> შემდეგი ფუნქციისთვის:</p>
+      <div class="formula">f(x) = x<sup>3</sup> - 3x</div>
+      <p>ინტერვალზე [-3, 3]</p>
+
+      <div class="task">
+        <div class="task-title">შესასრულებელი</div>
+        <ol>
+          <li>დაამატეთ სათაური და ღერძების სახელები</li>
+          <li>დაახლოებით დაადგინეთ, სად კვეთს გრაფიკი x-ღერძს</li>
+          <li>შეადარეთ შედეგი <span class="inline-code">solve</span>-ის მიერ მიღებულ ფესვებს</li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="hw11">
+      <h2>ამოცანა 11 — ტენიანობის კლების მოდელი</h2>
+      <p>მოცემულია გაშრობის მარტივი მოდელი:</p>
+      <div class="formula">M(t) = M<sub>0</sub> e<sup>-kt</sup></div>
+
+      <p>სადაც:</p>
+      <ul>
+        <li>M<sub>0</sub> = 80</li>
+        <li>k = 0.25</li>
+      </ul>
+
+      <div class="task">
+        <div class="task-title">შესასრულებელი</div>
+        <ol>
+          <li>განსაზღვრეთ მოდელი სიმბოლურად</li>
+          <li>ჩასვით რიცხვითი მნიშვნელობები</li>
+          <li>იპოვეთ M(5)</li>
+          <li>იპოვეთ dM/dt</li>
+          <li>განმარტეთ, იზრდება თუ მცირდება ტენიანობა დროთა განმავლობაში</li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="hw12">
+      <h2>ამოცანა 12 — ტემპერატურის მოდელი</h2>
+      <p>მოცემულია:</p>
+      <div class="formula">T(t) = 25 + 60e<sup>-0.3t</sup></div>
+
+      <div class="task">
+        <div class="task-title">შესასრულებელი</div>
+        <ol>
+          <li>ააგეთ T(t)-ის გრაფიკი ინტერვალზე 0 ≤ t ≤ 20</li>
+          <li>იპოვეთ წარმოებული სიმბოლურად</li>
+          <li>გამოთვალეთ წარმოებული t = 0-ზე</li>
+          <li>განმარტეთ წარმოებულის ნიშნის ფიზიკური მნიშვნელობა</li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="hw13">
+      <h2>ამოცანა 13 — კრიტიკული წერტილები</h2>
+      <p>მოცემულია:</p>
+      <div class="formula">f(x) = x<sup>3</sup> - 3x<sup>2</sup> - 9x + 2</div>
+
+      <div class="task">
+        <div class="task-title">შესასრულებელი</div>
+        <ol>
+          <li>იპოვეთ პირველი წარმოებული</li>
+          <li>ამოხსენით f′(x) = 0</li>
+          <li>იპოვეთ მეორე წარმოებული</li>
+          <li>დაახასიათეთ კრიტიკული წერტილები: ლოკალური მაქსიმუმია თუ ლოკალური მინიმუმი</li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="hw14">
+      <h2>ამოცანა 14 — ფართობი მრუდის ქვეშ</h2>
+      <p>გამოთვალეთ MATLAB-ში:</p>
+      <div class="formula">∫<sub>0</sub><sup>4</sup> (x<sup>2</sup> + 1) dx</div>
+
+      <div class="task">
+        <div class="task-title">შესასრულებელი</div>
+        <ol>
+          <li>იპოვეთ ზუსტი მნიშვნელობა სიმბოლურად</li>
+          <li>ააგეთ ფუნქციის გრაფიკი [0,4]-ზე</li>
+          <li>განმარტეთ, რას ნიშნავს მიღებული ფართობი გეომეტრიულად</li>
+        </ol>
+      </div>
+    </section>
+
+ 
+
+    <section id="hw15">
+      <h2>ამოცანა 15 —  მაგალითი: სითბო და ტემპერატურა </h2>
+      <p>მოცემულია მარტივი სითბური მოდელი:</p>
+      <div class="formula">Q(T) = 5T<sup>2</sup> - 20T + 15</div>
+
+      <div class="task">
+        <div class="task-title">შესასრულებელი</div>
+        <ol>
+          <li>განსაზღვრეთ Q(T) სიმბოლურად</li>
+          <li>იპოვეთ მისი წარმოებული</li>
+          <li>იპოვეთ T-ს მნიშვნელობა(ები), სადაც dQ/dT = 0</li>
+          <li>ააგეთ Q(T)-ის გრაფიკი ინტერვალზე 0 ≤ T ≤ 10</li>
+          <li>მიუთითეთ, სად აქვს ფუნქციას მინიმუმი ან მაქსიმუმი</li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="hw16">
+      <h2>ამოცანა 16 — შერეული სიმბოლური და რიცხვითი სამუშაო</h2>
+      <p>მოცემულია:</p>
+      <div class="formula">f(x) = (x<sup>2</sup> + 1) / (x + 2)</div>
+
+      <div class="task">
+        <div class="task-title">შესასრულებელი</div>
+        <ol>
+          <li>განსაზღვრეთ ფუნქცია სიმბოლურად</li>
+          <li>გაამარტივეთ, თუ შესაძლებელია</li>
+          <li>იპოვეთ წარმოებული</li>
+          <li>ააგეთ გრაფიკი ინტერვალზე [-1, 5]</li>
+          <li>გამოთვალეთ ფუნქციის მნიშვნელობა x = 0, x = 1, x = 3-ზე</li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="hw18">
+      <h2>ამოცანა 18 — თეორიული შეკითხვები</h2>
+      <p>რამდენიმე წინადადებით უპასუხეთ:</p>
+
+      <div class="task">
+        <div class="task-title">შეკითხვები</div>
+        <ol>
+          <li>რა განსხვავებაა MATLAB-ში რიცხვით და სიმბოლურ ცვლადს შორის?</li>
+          <li>როდის ვიყენებთ <span class="inline-code">plot</span>-ს და როდის <span class="inline-code">fplot</span>-ს?</li>
+          <li>რატომ არის საჭირო <span class="inline-code">.^</span> ვექტორებთან მუშაობისას?</li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="extra">
+      <h2>დამატებითი ამოცანები</h2>
+
+      <h3>დამატებითი ამოცანა 1</h3>
+      <div class="formula">e<sup>-x</sup> = x</div>
+      <p>ამოხსენით MATLAB-ის საშუალებით და მოკლედ განიხილეთ შედეგი.</p>
+
+      <h3>დამატებითი ამოცანა 2</h3>
+      <p>ფუნქციისთვის</p>
+      <div class="formula">f(x) = x<sup>4</sup> - 4x<sup>2</sup></div>
+      <p>იპოვეთ:</p>
+      <ul>
+        <li>პირველი წარმოებული</li>
+        <li>კრიტიკული წერტილები</li>
+        <li>მეორე წარმოებული</li>
+        <li>გრაფიკი</li>
+        <li>მოახდინეთ ექსტრემუმების კლასიფიკაცია</li>
+      </ul>
+
+      <h3>დამატებითი ამოცანა 3</h3>
+      <p>შექმენით ერთი MATLAB სკრიპტი, რომელიც:</p>
+      <ul>
+        <li>განსაზღვრავს სიმბოლურ ფუნქციას</li>
+        <li>პოულობს მის წარმოებულს</li>
+        <li>პოულობს მის ინტეგრალს</li>
+        <li>ითვლის მის მნიშვნელობას ერთ წერტილში</li>
+        <li>აგებს მის გრაფიკს</li>
+      </ul>
+      <p>ფუნქცია თქვენით აირჩიეთ.</p>
+    </section>
+
+    
+
+
+  </div>
+</body>
+</html>

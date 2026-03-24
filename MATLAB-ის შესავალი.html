@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MATLAB-ის შესავალი </title>
+  <style>
+    :root{
+      --bg:#f7f9fc;
+      --card:#ffffff;
+      --text:#1f2937;
+      --muted:#6b7280;
+      --accent:#1d4ed8;
+      --accent-2:#0f766e;
+      --border:#dbe3ef;
+      --code-bg:#0f172a;
+      --code-text:#e5eefc;
+      --soft:#eef4ff;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      line-height:1.65;
+      color:var(--text);
+      background:var(--bg);
+    }
+    .container{
+      max-width:1100px;
+      margin:0 auto;
+      padding:32px 20px 64px;
+    }
+    header{
+      background:linear-gradient(135deg,#eaf2ff,#f7fffe);
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:28px 24px;
+      margin-bottom:24px;
+    }
+    h1{
+      margin:0 0 10px;
+      font-size:2.2rem;
+      color:#0f172a;
+    }
+    .subtitle{
+      margin:0;
+      color:var(--muted);
+      font-size:1.05rem;
+    }
+    .note{
+      margin-top:18px;
+      padding:12px 14px;
+      background:#fff;
+      border-left:5px solid var(--accent);
+      border-radius:10px;
+      color:#374151;
+    }
+    nav{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:18px 20px;
+      margin-bottom:24px;
+    }
+    nav h2{
+      margin:0 0 12px;
+      font-size:1.2rem;
+    }
+    nav ul{
+      margin:0;
+      padding-left:20px;
+      columns:2;
+    }
+    nav li{
+      margin:6px 0;
+    }
+    nav a{
+      color:var(--accent);
+      text-decoration:none;
+    }
+    nav a:hover{
+      text-decoration:underline;
+    }
+    section{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:24px;
+      margin-bottom:22px;
+      box-shadow:0 3px 10px rgba(15,23,42,0.03);
+    }
+    h2{
+      margin-top:0;
+      color:#111827;
+      font-size:1.55rem;
+    }
+    h3{
+      color:#1f2937;
+      margin-top:24px;
+      margin-bottom:8px;
+      font-size:1.12rem;
+    }
+    p{
+      margin:10px 0;
+    }
+    ul{
+      margin:10px 0 10px 20px;
+    }
+    li{
+      margin:6px 0;
+    }
+    .code-block{
+      background:var(--code-bg);
+      color:var(--code-text);
+      padding:14px 16px;
+      border-radius:12px;
+      overflow-x:auto;
+      font-family: Consolas, Monaco, "Courier New", monospace;
+      font-size:0.95rem;
+      line-height:1.55;
+      border:1px solid #1e293b;
+      white-space:pre;
+    }
+    .inline-code{
+      font-family: Consolas, Monaco, "Courier New", monospace;
+      background:#eef2ff;
+      color:#312e81;
+      padding:2px 7px;
+      border-radius:7px;
+      font-size:0.95em;
+    }
+    .example{
+      background:var(--soft);
+      border:1px solid #c9d9ff;
+      border-radius:14px;
+      padding:16px;
+      margin:14px 0;
+    }
+    .example-title{
+      font-weight:700;
+      color:#1e3a8a;
+      margin-bottom:8px;
+    }
+    .tip{
+      background:#ecfeff;
+      border-left:5px solid var(--accent-2);
+      padding:12px 14px;
+      border-radius:10px;
+      margin:14px 0;
+    }
+    .warning{
+      background:#fff7ed;
+      border-left:5px solid #ea580c;
+      padding:12px 14px;
+      border-radius:10px;
+      margin:14px 0;
+    }
+    table{
+      width:100%;
+      border-collapse:collapse;
+      margin-top:12px;
+    }
+    th, td{
+      border:1px solid var(--border);
+      padding:10px 12px;
+      text-align:left;
+      vertical-align:top;
+    }
+    th{
+      background:#f1f5f9;
+    }
+    footer{
+      text-align:center;
+      color:var(--muted);
+      font-size:0.95rem;
+      margin-top:20px;
+      padding:12px;
+    }
+    @media (max-width: 800px){
+      nav ul{columns:1}
+      h1{font-size:1.7rem}
+      section{padding:18px}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>MATLAB-ის შესავალი </h1>
+      <p class="subtitle">
+        რიცხვითი და სიმბოლური ცვლადები, განტოლებების ამოხსნა, წარმოებულები,
+        ინტეგრალები, გრაფიკები და მაგალითები.
+      </p>
+    </header>
+
+    <nav>
+      <h2>სარჩევი</h2>
+      <ul>
+        <li><a href="#intro">შესავალი</a></li>
+        <li><a href="#what-is-matlab">რა არის MATLAB?</a></li>
+        <li><a href="#workspace">MATLAB-ის სამუშაო გარემო</a></li>
+        <li><a href="#numeric-vars">რიცხვითი ცვლადები</a></li>
+        <li><a href="#arithmetic">ძირითადი ოპერაციები</a></li>
+        <li><a href="#syms">სიმბოლური ცვლადები</a></li>
+        <li><a href="#expressions">გამოსახულებების შექმნა</a></li>
+        <li><a href="#subs">მნიშვნელობების ჩასმა</a></li>
+        <li><a href="#solve">განტოლებების ამოხსნა</a></li>
+        <li><a href="#diff">წარმოებულები</a></li>
+        <li><a href="#int">ინტეგრალები</a></li>
+        <li><a href="#plots">რიცხვითი გრაფიკები</a></li>
+        <li><a href="#fplot">სიმბოლური გრაფიკები</a></li>
+        <li><a href="#matlabfunction">სიმბოლურიდან რიცხვითზე</a></li>
+        <li><a href="#engineering-example">საინჟინრო მაგალითი</a></li>
+        <li><a href="#output">შედეგის გამოტანა</a></li>
+        <li><a href="#vectors">ვექტორები და მასივები</a></li>
+        <li><a href="#mistakes">ხშირი შეცდომები</a></li>
+        <li><a href="#workflow">რეკომენდებული სამუშაო სქემა</a></li>
+        <li><a href="#mini-examples">პატარა მაგალითები</a></li>
+        <li><a href="#commands">ძირითადი ბრძანებები</a></li>
+        <li><a href="#final-idea">მთავარი იდეა</a></li>
+      </ul>
+    </nav>
+
+    <section id="intro">
+      <h2>შესავალი</h2>
+      <p>
+        თქვენი მიზანია შეძლოთ MATLAB-ში:
+      </p>
+      <ul>
+        <li>რიცხვითი ცვლადების გამოცხადება</li>
+        <li>სიმბოლური ცვლადების გამოყენება <span class="inline-code">syms</span>-ის საშუალებით</li>
+        <li>განტოლებების ამოხსნა</li>
+        <li>წარმოებულების გამოთვლა</li>
+        <li>ინტეგრალების გამოთვლა</li>
+        <li>გრაფიკების აგება და ანალიზი</li>
+        <li>რიცხვით და სიმბოლურ გამოთვლებს შორის განსხვავების გააზრება</li>
+      </ul>
+      <p>
+        MATLAB-ს გამოვიყენებთ როგორც საინჟინრო ხელსაწყოს, რომელიც
+        მათემატიკური მოდელის აღწერის, 
+        რიცხვითი გამოთვლების ჩატარების, შედეგის ვიზუალიზების და მისი
+        ინტერპრეტირების საშუალებას გვაძლევს.
+      </p>
+    </section>
+
+    <section id="what-is-matlab">
+      <h2>1. რა არის MATLAB?</h2>
+      <p><strong>MATLAB</strong> არის პროგრამული გარემო, რომელიც გამოიყენება:</p>
+      <ul>
+        <li>რიცხვითი გამოთვლებისთვის</li>
+        <li>სიმბოლური გამოთვლებისთვის</li>
+        <li>გრაფიკების ასაგებად</li>
+        <li>განტოლებების ამოსახსნელად</li>
+        <li>მონაცემების დასამუშავებლად</li>
+        <li>პროგრამებისა და სკრიპტების დასაწერად</li>
+      </ul>
+        
+    </section>
+
+    <section id="workspace">
+      <h2>2. MATLAB-ის სამუშაო გარემო</h2>
+
+      <h3>2.1 Command Window</h3>
+      <p>აქ ბრძანებებს პირდაპირ ვწერთ და შედეგს მაშინვე ვიღებთ.</p>
+      <div class="example">
+        <div class="example-title">მაგალითი</div>
+        <div class="code-block">2 + 3</div>
+      </div>
+      <div class="example">
+        <div class="example-title">შედეგი</div>
+        <div class="code-block">ans =
+
+     5</div>
+      </div>
+
+      <h3>2.2 Script File</h3>
+      <p>
+        Script არის ფაილი, სადაც შეგვიძლია რამდენიმე ბრძანება ერთად შევინახოთ.
+        ეს განსაკუთრებით გამოსადეგია როდესაც რამდენიმე გამოთვლის თანმიმდევრობით 
+        ჩატარებაა აუცილებელი.
+      </p>
+      <div class="example">
+        <div class="example-title">მაგალითი</div>
+        <div class="code-block">a = 5;
+b = 3;
+c = a + b;
+disp(c)</div>
+      </div>
+    </section>
+
+    <section id="numeric-vars">
+      <h2>3. რიცხვითი ცვლადები</h2>
+
+      <h3>3.1 ცვლადის დეკლარირება</h3>
+      <div class="code-block">x = 5;
+y = 2.3;
+z = x * y;</div>
+
+      <h3>3.2 ცვლადის სახელის შერჩევის წესები</h3>
+      <ul>
+        <li>უნდა იწყებოდეს ასოთი</li>
+        <li>შეიძლება შეიცავდეს ციფრებს</li>
+        <li>შეიძლება შეიცავდეს ქვედა ტირეს <span class="inline-code">_</span></li>
+        <li>არის case-sensitive</li>
+      </ul>
+
+      <div class="example">
+        <div class="example-title">მაგალითი</div>
+        <div class="code-block">T = 50;
+t = 10;</div>
+        <p>აქ <span class="inline-code">T</span> და <span class="inline-code">t</span> სხვადასხვა ცვლადებია.</p>
+      </div>
+    </section>
+
+    <section id="arithmetic">
+      <h2>4. ძირითადი არითმეტიკული ოპერაციები</h2>
+      <div class="code-block">a + b    % შეკრება
+a - b    % გამოკლება
+a * b    % გამრავლება
+a / b    % გაყოფა
+a^2      % ხარისხში აყვანა
+sqrt(a)  % კვადრატული ფესვი
+exp(a)   % e^a
+log(a)   % ნატურალური ლოგარითმი</div>
+    </section>
+
+    <section id="syms">
+      <h2>5. სიმბოლური ცვლადები — <span class="inline-code">syms</span></h2>
+      <p>
+        როცა გვინდა MATLAB-მა იმუშაოს ალგებრულ გამოსახულებებთან
+        ვიყენებთ სიმბოლურ ცვლადებს.
+      </p>
+      <div class="code-block">syms x</div>
+      <p>ახლა <span class="inline-code">x</span> არის სიმბოლური ცვლადი.</p>
+
+      <div class="example">
+        <div class="example-title">მაგალითი</div>
+        <div class="code-block">syms x
+f = x^2 + 3*x + 2</div>
+      </div>
+
+      <p>რამდენიმე სიმბოლური ცვლადის გამოცხადება:</p>
+      <div class="code-block">syms x y t</div>
+
+      <p>ეს განსაკუთრებით გამოგვადგება:</p>
+      <ul>
+        <li>განტოლებების ამოსახსნელად</li>
+        <li>წარმოებულებისთვის</li>
+        <li>ინტეგრალებისთვის</li>
+        <li>გამოსახულებების გასამარტივებლად</li>
+      </ul>
+    </section>
+
+    <section id="expressions">
+      <h2>6. გამოსახულებების შექმნა და გარდაქმნა</h2>
+      <div class="code-block">syms x
+f = 2*x^3 - 5*x + 1;</div>
+
+      <p>გამოსახულებებთან გამოსადეგი ბრძანებებია:</p>
+      <div class="code-block">expand(f)
+factor(f)
+simplify(f)
+collect(f)</div>
+
+      <div class="example">
+        <div class="example-title">მაგალითი</div>
+        <div class="code-block">syms x
+f = (x + 1)^2;
+expand(f)</div>
+      </div>
+
+      <div class="example">
+        <div class="example-title">შედეგი</div>
+        <div class="code-block">x^2 + 2*x + 1</div>
+      </div>
+    </section>
+
+    <section id="subs">
+      <h2>7. მნიშვნელობების ჩასმა — <span class="inline-code">subs</span></h2>
+      <p>თუ გვინდა კონკრეტული რიცხვი ჩავანაცვლოთ სიმბოლურ გამოსახულებაში, ვიყენებთ <span class="inline-code">subs</span>-ს.</p>
+
+      <div class="example">
+        <div class="example-title">მაგალითი</div>
+        <div class="code-block">syms x
+f = x^2 + 3*x + 1;
+subs(f, x, 2)</div>
+      </div>
+
+      <p>რამდენიმე ცვლადის ერთდროული ჩანაცვლება:</p>
+      <div class="code-block">syms x y
+f = x^2 + y;
+subs(f, [x y], [3 4])</div>
+    </section>
+
+    <section id="solve">
+      <h2>8. განტოლებების ამოხსნა</h2>
+
+      <h3>8.1 ერთი განტოლება</h3>
+      <div class="code-block">syms x
+solve(x^2 - 5*x + 6 == 0, x)</div>
+
+      <h3>8.2 პარამეტრიანი განტოლება</h3>
+      <div class="code-block">syms x k
+solve(k*x + 2 == 0, x)</div>
+
+      <h3>8.3 განტოლებათა სისტემა</h3>
+      <div class="code-block">syms x y
+eq1 = x + y == 5;
+eq2 = x - y == 1;
+solve([eq1, eq2], [x, y])</div>
+
+      <div class="warning">
+        ყურადღება: განტოლების ჩაწერისას ამოხსნისთვის უნდა გამოიყენოთ
+        <span class="inline-code">==</span> და არა <span class="inline-code">=</span>.
+      </div>
+    </section>
+
+    <section id="diff">
+      <h2>9. წარმოებულები</h2>
+      <p>წარმოებული აღწერს, როგორ იცვლება ფუნქცია.</p>
+
+      <h3>9.1 პირველი წარმოებული</h3>
+      <div class="code-block">syms x
+f = x^3 + 2*x^2 - x + 1;
+df = diff(f, x)</div>
+
+      <h3>9.2 მეორე წარმოებული</h3>
+      <div class="code-block">d2f = diff(f, x, 2)</div>
+
+      <h3>9.3 ნაწილობრივი წარმოებულები</h3>
+      <div class="code-block">syms x y
+f = x^2*y + sin(x*y);
+diff(f, x)
+diff(f, y)</div>
+
+      <p>ინჟინერიაში წარმოებული ხშირად აღწერს:</p>
+      <ul>
+        <li>ცვლილების სიჩქარეს</li>
+        <li>დახრილობას</li>
+        <li>მაქსიმუმსა და მინიმუმს</li>
+        <li>დროზე, ტემპერატურაზე ან კონცენტრაციაზე დამოკიდებული სიდიდის ცვლილებას</li>
+      </ul>
+    </section>
+
+    <section id="int">
+      <h2>10. ინტეგრირება</h2>
+      <p>ინტეგრალებისთვის გამოიყენება <span class="inline-code">int</span>.</p>
+
+      <h3>10.1 განუსაზღვრელი ინტეგრალი</h3>
+      <div class="code-block">syms x
+f = 3*x^2 + 2*x + 1;
+int(f, x)</div>
+
+      <h3>10.2 განსაზღვრული ინტეგრალი</h3>
+      <div class="code-block">int(f, x, 0, 2)</div>
+
+      <h3>10.3 ორმაგი ინტეგრალი</h3>
+      <div class="code-block">syms x y
+f = x + y;
+int(int(f, y, 0, 1), x, 0, 2)</div>
+
+      <p>ინტეგრალი ხშირად გვაძლევს:</p>
+      <ul>
+        <li>დაგროვილ რაოდენობას</li>
+        <li>მთლიან მასას</li>
+        <li>მთლიან სითბოს</li>
+        <li>საშუალო მნიშვნელობას</li>
+        <li>ფართობს მრუდის ქვეშ</li>
+      </ul>
+    </section>
+
+    <section id="plots">
+      <h2>11. რიცხვითი გრაფიკების აგება</h2>
+
+      <h3>11.1 ძირითადი გრაფიკი — <span class="inline-code">plot</span></h3>
+      <div class="code-block">x = 0:0.1:10;
+y = x.^2;
+plot(x, y)</div>
+
+      <p>ვექტორებთან მუშაობისას აუცილებელია ელემენტობრივი (წევრ-წევრი) ოპერატორების გამოყენება:</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>ოპერატორი</th>
+            <th>დანიშნულება</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="inline-code">.*</span></td>
+            <td>ელემენტობრივი გამრავლება</td>
+          </tr>
+          <tr>
+            <td><span class="inline-code">./</span></td>
+            <td>ელემენტობრივი გაყოფა</td>
+          </tr>
+          <tr>
+            <td><span class="inline-code">.^</span></td>
+            <td>ელემენტობრივი ხარისხი</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="example">
+        <div class="example-title">მაგალითი</div>
+        <div class="code-block">y = x.^2 + 2*x + 1;</div>
+      </div>
+
+      <h3>11.2 წარწერები და ბადე</h3>
+      <div class="code-block">plot(x, y)
+xlabel('x')
+ylabel('y')
+title('y = x^2')
+grid on</div>
+
+      <h3>11.3 რამდენიმე ფუნქცია ერთ გრაფიკზე</h3>
+      <div class="code-block">x = 0:0.1:10;
+y1 = x;
+y2 = x.^2;
+plot(x, y1, x, y2)
+legend('y = x', 'y = x^2')
+grid on</div>
+    </section>
+
+    <section id="fplot">
+      <h2>12. სიმბოლური ფუნქციის გრაფიკი — <span class="inline-code">fplot</span></h2>
+      <p>თუ ფუნქცია სიმბოლურად გვაქვს მოცემული ვიყენებთ <span class="inline-code">fplot</span> ბრძანებას.</p>
+
+      <div class="code-block">syms x
+f = x^3 - 4*x;
+fplot(f, [-3 3])
+grid on
+xlabel('x')
+ylabel('f(x)')
+title('სიმბოლური ფუნქციის გრაფიკი')</div>
+
+      <div class="tip">
+        <span class="inline-code">fplot</span> თავად არჩევს გრაფიკის ასაგებად საჭირო წერტილებს, ამიტომ სიმბოლურ ფუნქციებთან ხშირად უფრო მოსახერხებელია, ვიდრე ჩვეულებრივი <span class="inline-code">plot</span>.
+      </div>
+    </section>
+
+    <section id="matlabfunction">
+      <h2>13. სიმბოლურიდან რიცხვით ფუნქციაზე გადასვლა</h2>
+      <p>ხშირად გვინდა სიმბოლურად შექმნილი გამოსახულება გადავაქციოთ ჩვეულებრივ MATLAB ფუნქციად.</p>
+
+      <div class="code-block">syms x
+f = x^2 + 1;
+fh = matlabFunction(f);
+fh(3)</div>
+
+      <p>
+        ეს გამოსადეგია მაშინ, როცა სიმბოლურ ანალიზს ვაერთიანებთ რიცხვით გამოთვლებთან ან გრაფიკებთან.
+      </p>
+    </section>
+
+    <section id="engineering-example">
+      <h2>14. საინჟინრო მაგალითი</h2>
+      <p>ვთქვათ, ტენის შემცველობა დროზეა დამოკიდებული:</p>
+      <p><span class="inline-code">M(t) = M0 * exp(-k*t)</span></p>
+
+      <div class="code-block">syms M0 k t
+M = M0*exp(-k*t);</div>
+
+      <p>წარმოებული:</p>
+      <div class="code-block">diff(M, t)</div>
+
+      <p>ინტეგრალი:</p>
+      <div class="code-block">int(M, t)</div>
+
+      <p>კონკრეტული მნიშვნელობების ჩასმა:</p>
+      <div class="code-block">subs(M, [M0 k t], [80 0.3 5])</div>
+
+      <div class="example">
+        <div class="example-title">სტანდარტული საინჟინრო სქემა</div>
+        <ol>
+          <li>მოდელის ჩაწერა</li>
+          <li>სიმბოლური ანალიზი</li>
+          <li>რიცხვითი შეფასება</li>
+          <li>გრაფიკული წარმოდგენა</li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="output">
+      <h2>15. შედეგის გამოტანა</h2>
+
+      <h3>15.1 <span class="inline-code">disp</span></h3>
+      <div class="code-block">disp(x)</div>
+
+    </section>
+
+    <section id="vectors">
+      <h2>16. ვექტორები და მასივები</h2>
+
+      <h3>16.1 მწკრივი ვექტორი</h3>
+      <div class="code-block">x = [1 2 3 4];</div>
+
+      <h3>16.2 სვეტოვანი ვექტორი</h3>
+      <div class="code-block">x = [1; 2; 3; 4];</div>
+
+      <h3>16.3 თანაბარი ნაბიჯით აგებული ვექტორი</h3>
+      <div class="code-block">x = 0:0.5:5;</div>
+
+      <h3>16.4 <span class="inline-code">linspace</span></h3>
+      <div class="code-block">x = linspace(0, 10, 100);</div>
+      <p>ეს ქმნის 100 წერტილს 0-დან 10-მდე.</p>
+    </section>
+
+    <section id="mistakes">
+      <h2>17. ყველაზე გავრცელებული შეცდომები</h2>
+
+      <h3>17.1 წერტილ-მძიმის დავიწყება</h3>
+      <div class="code-block">a = 5;</div>
+      <p>თუ <span class="inline-code">;</span> არ დავწერეთ, MATLAB შედეგს ეკრანზე გამოიტანს.</p>
+
+      <h3>17.2 <span class="inline-code">^</span>-ის გამოყენება <span class="inline-code">.^</span>-ის ნაცვლად</h3>
+      <p>არასწორია:</p>
+      <div class="code-block">y = x^2</div>
+      <p>სწორია:</p>
+      <div class="code-block">y = x.^2</div>
+
+      <h3>17.3 სიმბოლური და რიცხვითი ცვლადების არევა</h3>
+      <div class="code-block">syms x
+x = 5;</div>
+      <p>ამ შემთხვევაში სიმბოლური <span class="inline-code">x</span> შეიცვლება რიცხვითი მნიშვნელობით.</p>
+
+      <h3>17.4 განტოლების არასწორად ჩაწერა</h3>
+      <p>სწორია:</p>
+      <div class="code-block">x^2 - 4 == 0</div>
+      <p>არასწორია:</p>
+      <div class="code-block">x^2 - 4 = 0</div>
+    </section>
+
+    <section id="workflow">
+      <h2>18. რეკომენდებული სამუშაო სქემა</h2>
+      <ol>
+        <li>მკაფიოდ განსაზღვრე ცვლადები</li>
+        <li>გადაწყვიტე, პრობლემა არის რიცხვითი, სიმბოლური, გრაფიკული თუ შერეული</li>
+        <li>სწორად ჩაწერე გამოსახულებები</li>
+        <li>გამოიყენე შესაბამისი ბრძანებები: <span class="inline-code">solve</span>, <span class="inline-code">diff</span>, <span class="inline-code">int</span>, <span class="inline-code">subs</span>, <span class="inline-code">plot</span>, <span class="inline-code">fplot</span></li>
+        <li> მოახდინე შედეგის ფიზიკური ან მათემატიკური ინტერპრეტაცია</li>
+      </ol>
+    </section>
+
+    <section id="mini-examples">
+      <h2>19. მაგალითები</h2>
+
+      <div class="example">
+        <div class="example-title">მაგალითი 1 — განტოლების ამოხსნა</div>
+        <div class="code-block">syms x
+sol = solve(2*x + 3 == 7, x)</div>
+      </div>
+
+      <div class="example">
+        <div class="example-title">მაგალითი 2 — წარმოებულის პოვნა</div>
+        <div class="code-block">syms x
+f = x^3 - 2*x + 1;
+df = diff(f, x)</div>
+      </div>
+
+      <div class="example">
+        <div class="example-title">მაგალითი 3 — ინტეგრალის გამოთვლა</div>
+        <div class="code-block">syms x
+f = 4*x;
+I = int(f, x, 0, 3)</div>
+      </div>
+
+      <div class="example">
+        <div class="example-title">მაგალითი 4 — რიცხვითი გრაფიკის აგება</div>
+        <div class="code-block">x = 0:0.1:5;
+y = exp(-x);
+plot(x, y)
+grid on</div>
+      </div>
+
+      <div class="example">
+        <div class="example-title">მაგალითი 5 — სიმბოლური გრაფიკის აგება</div>
+        <div class="code-block">syms x
+fplot(sin(x), [0 2*pi])
+grid on</div>
+      </div>
+    </section>
+
+    <section id="commands">
+      <h2>20. ძირითადი MATLAB ბრძანებები</h2>
+      <div class="code-block">syms
+solve
+diff
+int
+subs
+simplify
+expand
+factor
+plot
+fplot
+xlabel
+ylabel
+title
+legend
+grid on
+linspace
+disp
+fprintf
+matlabFunction</div>
+    </section>
+
+   
+
+    <footer>
+      MATLAB-ის შესავალი
+    </footer>
+  </div>
+</body>
+</html>
