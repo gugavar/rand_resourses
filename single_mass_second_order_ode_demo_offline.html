@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Single Mass Spring Damper Demo</title>
+  <style>
+    :root{
+      --bg:#f8fafc; --card:#ffffff; --border:#dbe2ea; --text:#0f172a;
+      --muted:#475569; --blue:#2563eb; --red:#dc2626; --slate:#334155;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
+    .wrap{max-width:1280px;margin:0 auto;padding:24px;display:grid;grid-template-columns:2fr 1fr;gap:24px}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:20px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+    .title{font-size:32px;font-weight:700;margin-bottom:8px}
+    .subtitle{font-size:15px;color:var(--muted);margin-bottom:18px}
+    .simbox{background:#fff;border:1px solid var(--border);border-radius:20px;padding:12px;margin-bottom:18px}
+    .controls-top{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin-bottom:18px}
+    button{border:none;border-radius:18px;padding:12px 16px;font-size:15px;font-weight:600;cursor:pointer;background:#0f172a;color:#fff}
+    button.secondary{background:#e2e8f0;color:#0f172a}
+    .timebox{border:1px solid var(--border);border-radius:18px;padding:12px 16px;display:flex;align-items:center;background:#f8fafc;font-size:15px}
+    .plot-title{font-size:15px;font-weight:600;margin-bottom:8px}
+    .panel-title{font-size:22px;font-weight:700;margin-bottom:14px}
+    .slider-row{margin-bottom:16px}
+    .slider-head{display:flex;justify-content:space-between;gap:8px;font-size:14px;margin-bottom:8px}
+    input[type="range"]{width:100%}
+    .mode-info{font-size:15px;line-height:1.5}
+    .mode-info .value{font-weight:700}
+    .presets{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    svg{display:block;width:100%;height:auto}
+    @media (max-width:980px){.wrap{grid-template-columns:1fr}.controls-top{grid-template-columns:1fr 1fr}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <div class="title">Single Mass–Spring–Damper System</div>
+      <div class="subtitle">ODE: m x'' + b x' + k x = 0</div>
+
+      <div class="simbox">
+        <svg viewBox="0 0 820 260" aria-label="single mass spring damper animation">
+          <rect x="50" y="38" width="20" height="165" fill="#94a3b8"></rect>
+          <line x1="70" y1="178" x2="760" y2="178" stroke="#334155" stroke-width="3"></line>
+          <path id="spring" fill="none" stroke="#0f172a" stroke-width="3"></path>
+          <rect id="mass" x="436" y="99" width="88" height="62" rx="18" fill="#2563eb"></rect>
+          <text id="massText" x="480" y="137" text-anchor="middle" font-size="24" fill="white">m</text>
+          <text id="kLabel" x="270" y="74" text-anchor="middle" font-size="20">k</text>
+          <text id="bLabel" x="270" y="98" text-anchor="middle" font-size="20" fill="#475569">b</text>
+          <line x1="480" y1="55" x2="480" y2="205" stroke="#cbd5e1" stroke-dasharray="6 6" stroke-width="2"></line>
+          <text x="480" y="46" text-anchor="middle" font-size="14" fill="#64748b">x = 0</text>
+          <line id="dispLine" x1="480" y1="215" x2="480" y2="215" stroke="#dc2626" stroke-width="3"></line>
+          <text id="dispText" x="480" y="237" text-anchor="middle" font-size="18" fill="#dc2626">x(t)</text>
+        </svg>
+      </div>
+
+      <div class="controls-top">
+        <button id="startBtn">Start</button>
+        <button id="resetBtn" class="secondary">Reset</button>
+        <div class="timebox" id="timeBox">t = 0.00 s</div>
+        <div class="timebox" id="xBox">x(t) = 0.000</div>
+      </div>
+
+      <div>
+        <div class="slider-head">
+          <span>Time</span>
+          <span id="timeRangeLabel">0.00 / 16.0 s</span>
+        </div>
+        <input id="timeSlider" type="range" min="0" max="16" step="0.01" value="0" />
+      </div>
+
+      <div style="margin-top:18px;">
+        <div class="plot-title">Solution x(t)</div>
+        <svg id="plot" viewBox="0 0 560 240" aria-label="solution plot">
+          <line x1="32" y1="120" x2="528" y2="120" stroke="black" stroke-width="1.5"></line>
+          <line x1="32" y1="16" x2="32" y2="224" stroke="black" stroke-width="1.5"></line>
+          <text x="534" y="114" font-size="12">t</text>
+          <text x="10" y="26" font-size="12">x</text>
+          <path id="plotPath" fill="none" stroke="#2563eb" stroke-width="2.5"></path>
+          <line id="plotCursor" x1="32" y1="16" x2="32" y2="224" stroke="#dc2626" stroke-width="2" stroke-dasharray="6 6"></line>
+          <text x="490" y="24" font-size="12" fill="#2563eb">x(t)</text>
+        </svg>
+      </div>
+    </div>
+
+    <div>
+      <div class="card" style="margin-bottom:24px;">
+        <div class="panel-title">Parameters</div>
+        <div id="controls"></div>
+      </div>
+
+      <div class="card" style="margin-bottom:24px;">
+        <div class="panel-title">Case Information</div>
+        <div class="mode-info">
+          <div>Case: <span class="value" id="caseName"></span></div>
+          <div>Discriminant: <span class="value" id="discLabel"></span></div>
+          <div>Roots: <span class="value" id="rootsText"></span></div>
+          <div>Current velocity: <span class="value" id="velNow"></span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="panel-title">Quick Presets</div>
+        <div class="presets" id="presets"></div>
+      </div>
+    </div>
+  </div>
+
+<script>
+(() => {
+  function springPath(x1, x2, y, coils = 9, amp = 12) {
+    const L = Math.max(8, x2 - x1);
+    const lead = Math.min(20, L * 0.18);
+    const usable = Math.max(10, L - 2 * lead);
+    let d = `M ${x1} ${y} L ${x1 + lead} ${y}`;
+    for (let i = 0; i < coils; i++) {
+      const xb = x1 + lead + ((i + 0.5) * usable) / coils;
+      const xc = x1 + lead + ((i + 1) * usable) / coils;
+      d += ` L ${xb} ${y + (i % 2 === 0 ? -amp : amp)} L ${xc} ${y}`;
+    }
+    d += ` L ${x2} ${y}`;
+    return d;
+  }
+
+  function solveResponse(m, b, k, x0, v0) {
+    const eps = 1e-9;
+    const D = b * b - 4 * m * k;
+
+    if (Math.abs(k) < eps && Math.abs(b) < eps) {
+      return { caseName:'Free particle', discriminantLabel:'b = 0, k = 0', rootsText:'r = 0 (double)', x:(t)=>x0 + v0*t };
+    }
+    if (Math.abs(k) < eps) {
+      const alpha = b / m;
+      return {
+        caseName:'No spring (k = 0)',
+        discriminantLabel: b > 0 ? 'D > 0' : 'D = 0',
+        rootsText:`r₁ = 0, r₂ = ${(-alpha).toFixed(3)}`,
+        x:(t)=>{
+          if (Math.abs(alpha) < eps) return x0 + v0*t;
+          const C2 = -v0 / alpha;
+          const C1 = x0 - C2;
+          return C1 + C2 * Math.exp(-alpha * t);
+        }
+      };
+    }
+    if (Math.abs(b) < eps) {
+      const omega = Math.sqrt(Math.max(0, k / m));
+      return {
+        caseName:'Undamped oscillation (b = 0)',
+        discriminantLabel:'D < 0',
+        rootsText:`r = ± ${omega.toFixed(3)} i`,
+        x:(t)=>x0 * Math.cos(omega * t) + (omega < eps ? v0 * t : (v0 / omega) * Math.sin(omega * t))
+      };
+    }
+    if (D > eps) {
+      const r1 = (-b + Math.sqrt(D)) / (2 * m);
+      const r2 = (-b - Math.sqrt(D)) / (2 * m);
+      const C1 = Math.abs(r1 - r2) < eps ? 0 : (v0 - r2 * x0) / (r1 - r2);
+      const C2 = x0 - C1;
+      return {
+        caseName:'Overdamped',
+        discriminantLabel:'D > 0',
+        rootsText:`r₁ = ${r1.toFixed(3)}, r₂ = ${r2.toFixed(3)}`,
+        x:(t)=>C1 * Math.exp(r1 * t) + C2 * Math.exp(r2 * t)
+      };
+    }
+    if (Math.abs(D) <= eps) {
+      const r = -b / (2 * m);
+      const C1 = x0;
+      const C2 = v0 - r * x0;
+      return {
+        caseName:'Critically damped',
+        discriminantLabel:'D = 0',
+        rootsText:`r = ${r.toFixed(3)} (double)`,
+        x:(t)=>(C1 + C2 * t) * Math.exp(r * t)
+      };
+    }
+    const alpha = -b / (2 * m);
+    const beta = Math.sqrt(4 * m * k - b * b) / (2 * m);
+    const C1 = x0;
+    const C2 = beta < eps ? 0 : (v0 - alpha * x0) / beta;
+    return {
+      caseName:'Underdamped',
+      discriminantLabel:'D < 0',
+      rootsText:`r = ${alpha.toFixed(3)} ± ${beta.toFixed(3)}i`,
+      x:(t)=>Math.exp(alpha * t) * (C1 * Math.cos(beta * t) + C2 * Math.sin(beta * t))
+    };
+  }
+
+  const presets = [
+    { label:'b=0, k=0', m:1, b:0, k:0, x0:1, v0:0.8, tMax:16 },
+    { label:'b=0', m:1, b:0, k:3, x0:1, v0:0, tMax:16 },
+    { label:'k=0', m:1, b:1.4, k:0, x0:1, v0:-1.2, tMax:16 },
+    { label:'critical', m:1, b:2, k:1, x0:1, v0:0, tMax:16 },
+    { label:'underdamped', m:1, b:1, k:3, x0:1, v0:0, tMax:16 },
+    { label:'overdamped', m:1, b:4, k:2, x0:1, v0:0, tMax:16 },
+  ];
+
+  const controlConfig = [
+    { key:'m', label:'m', min:0.2, max:6, step:0.1, digits:2 },
+    { key:'b', label:'b', min:0, max:8, step:0.1, digits:2 },
+    { key:'k', label:'k', min:0, max:8, step:0.1, digits:2 },
+    { key:'x0', label:'x(0)', min:-2.5, max:2.5, step:0.05, digits:2 },
+    { key:'v0', label:"x'(0)", min:-4, max:4, step:0.05, digits:2 },
+    { key:'tMax', label:'T max', min:4, max:30, step:0.5, digits:1 },
+  ];
+
+  const state = { m:1, b:0.8, k:3, x0:1, v0:0, tMax:16, currentT:0, running:false, raf:null, lastTs:null };
+
+  const controlsDiv = document.getElementById('controls');
+  const presetsDiv = document.getElementById('presets');
+  const startBtn = document.getElementById('startBtn');
+  const resetBtn = document.getElementById('resetBtn');
+  const timeBox = document.getElementById('timeBox');
+  const xBox = document.getElementById('xBox');
+  const timeSlider = document.getElementById('timeSlider');
+  const timeRangeLabel = document.getElementById('timeRangeLabel');
+  const plotPath = document.getElementById('plotPath');
+  const plotCursor = document.getElementById('plotCursor');
+  const spring = document.getElementById('spring');
+  const mass = document.getElementById('mass');
+  const massText = document.getElementById('massText');
+  const kLabel = document.getElementById('kLabel');
+  const bLabel = document.getElementById('bLabel');
+  const dispLine = document.getElementById('dispLine');
+  const dispText = document.getElementById('dispText');
+  const caseName = document.getElementById('caseName');
+  const discLabel = document.getElementById('discLabel');
+  const rootsText = document.getElementById('rootsText');
+  const velNow = document.getElementById('velNow');
+
+  function getSolution() { return solveResponse(state.m, state.b, state.k, state.x0, state.v0); }
+  function getSamples(solution) {
+    const n = 500, arr = [];
+    for (let i = 0; i <= n; i++) {
+      const t = (i / n) * state.tMax;
+      arr.push({ t, x: solution.x(t) });
+    }
+    return arr;
+  }
+  function getYMax(samples) {
+    const maxAbs = Math.max(...samples.map(p => Math.abs(p.x)), Math.abs(state.x0), 0.4);
+    return Math.max(0.8, maxAbs * 1.15);
+  }
+  function getVelocity(solution, t) {
+    const h = 1e-4;
+    return (solution.x(t + h) - solution.x(Math.max(0, t - h))) / (t < h ? h : 2 * h);
+  }
+
+  function resetAnimation() {
+    state.running = false;
+    state.currentT = 0;
+    state.lastTs = null;
+    if (state.raf) cancelAnimationFrame(state.raf);
+    state.raf = null;
+    startBtn.textContent = 'Start';
+    timeSlider.max = String(state.tMax);
+    timeSlider.value = '0';
+    render();
+  }
+
+  function render() {
+    const solution = getSolution();
+    const samples = getSamples(solution);
+    const yMax = getYMax(samples);
+    const xNow = solution.x(state.currentT);
+    const vNowValue = getVelocity(solution, state.currentT);
+
+    caseName.textContent = solution.caseName;
+    discLabel.textContent = solution.discriminantLabel;
+    rootsText.textContent = solution.rootsText;
+    velNow.textContent = vNowValue.toFixed(3);
+
+    timeBox.textContent = `t = ${state.currentT.toFixed(2)} s`;
+    xBox.textContent = `x(t) = ${xNow.toFixed(3)}`;
+    timeRangeLabel.textContent = `${state.currentT.toFixed(2)} / ${state.tMax.toFixed(1)} s`;
+    timeSlider.max = String(state.tMax);
+    timeSlider.value = String(state.currentT);
+
+    const wallX = 70, massW = 88, massH = 62, centerY = 130, baseMassCenter = 480, scale = 90;
+    const massCenter = baseMassCenter + xNow * scale;
+
+    spring.setAttribute('d', springPath(wallX, massCenter - massW / 2, centerY, 9, 12));
+    mass.setAttribute('x', (massCenter - massW / 2).toFixed(3));
+    mass.setAttribute('y', (centerY - massH / 2).toFixed(3));
+    massText.setAttribute('x', massCenter.toFixed(3));
+    massText.setAttribute('y', (centerY + 7).toFixed(3));
+    kLabel.setAttribute('x', ((wallX + massCenter - massW / 2) / 2).toFixed(3));
+    bLabel.setAttribute('x', ((wallX + massCenter - massW / 2) / 2).toFixed(3));
+    dispLine.setAttribute('x1', baseMassCenter.toFixed(3));
+    dispLine.setAttribute('x2', massCenter.toFixed(3));
+    dispText.setAttribute('x', ((baseMassCenter + massCenter) / 2).toFixed(3));
+
+    const w = 560, h = 240, pad = 32;
+    const toX = (t) => pad + (t / Math.max(1e-6, state.tMax)) * (w - 2 * pad);
+    const toY = (y) => h / 2 - (y / Math.max(1e-6, yMax)) * (h / 2 - pad);
+    plotPath.setAttribute('d', samples.map((p, i) => `${i === 0 ? 'M' : 'L'} ${toX(p.t).toFixed(3)} ${toY(p.x).toFixed(3)}`).join(' '));
+    const xc = toX(state.currentT).toFixed(3);
+    plotCursor.setAttribute('x1', xc);
+    plotCursor.setAttribute('x2', xc);
+  }
+
+  function buildControls() {
+    controlsDiv.innerHTML = '';
+    controlConfig.forEach(cfg => {
+      const row = document.createElement('div');
+      row.className = 'slider-row';
+      const head = document.createElement('div');
+      head.className = 'slider-head';
+      const label = document.createElement('span');
+      label.textContent = cfg.label;
+      const value = document.createElement('span');
+      value.textContent = Number(state[cfg.key]).toFixed(cfg.digits);
+      head.appendChild(label);
+      head.appendChild(value);
+      const slider = document.createElement('input');
+      slider.type = 'range';
+      slider.min = cfg.min;
+      slider.max = cfg.max;
+      slider.step = cfg.step;
+      slider.value = state[cfg.key];
+      slider.addEventListener('input', () => {
+        state[cfg.key] = Number(slider.value);
+        value.textContent = Number(state[cfg.key]).toFixed(cfg.digits);
+        resetAnimation();
+      });
+      row.appendChild(head);
+      row.appendChild(slider);
+      controlsDiv.appendChild(row);
+    });
+  }
+
+  function buildPresets() {
+    presetsDiv.innerHTML = '';
+    presets.forEach(preset => {
+      const btn = document.createElement('button');
+      btn.className = 'secondary';
+      btn.textContent = preset.label;
+      btn.addEventListener('click', () => {
+        state.m = preset.m; state.b = preset.b; state.k = preset.k;
+        state.x0 = preset.x0; state.v0 = preset.v0; state.tMax = preset.tMax ?? 16;
+        buildControls();
+        resetAnimation();
+      });
+      presetsDiv.appendChild(btn);
+    });
+  }
+
+  function animate(ts) {
+    if (!state.running) return;
+    if (state.lastTs === null) state.lastTs = ts;
+    let elapsed = (ts - state.lastTs) / 1000;
+    state.lastTs = ts;
+    elapsed = Math.min(elapsed, 0.05);
+    state.currentT += elapsed;
+    if (state.currentT >= state.tMax) {
+      state.currentT = state.tMax;
+      state.running = false;
+      startBtn.textContent = 'Start';
+      state.lastTs = null;
+      render();
+      return;
+    }
+    render();
+    state.raf = requestAnimationFrame(animate);
+  }
+
+  startBtn.addEventListener('click', () => {
+    state.running = !state.running;
+    startBtn.textContent = state.running ? 'Pause' : 'Start';
+    if (state.running) {
+      state.lastTs = null;
+      state.raf = requestAnimationFrame(animate);
+    } else if (state.raf) {
+      cancelAnimationFrame(state.raf);
+      state.raf = null;
+    }
+  });
+
+  resetBtn.addEventListener('click', resetAnimation);
+
+  timeSlider.addEventListener('input', () => {
+    state.running = false;
+    startBtn.textContent = 'Start';
+    if (state.raf) { cancelAnimationFrame(state.raf); state.raf = null; }
+    state.currentT = Number(timeSlider.value);
+    state.lastTs = null;
+    render();
+  });
+
+  buildControls();
+  buildPresets();
+  render();
+})();
+</script>
+</body>
+</html>
